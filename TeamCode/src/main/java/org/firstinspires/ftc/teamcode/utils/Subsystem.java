@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.utils;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 public interface Subsystem {
 
     /**
@@ -11,5 +13,7 @@ public interface Subsystem {
      * - sensor processing
      * - state machines
      */
+    void init(HardwareMap hardwareMap);
+
     void update();
 }
