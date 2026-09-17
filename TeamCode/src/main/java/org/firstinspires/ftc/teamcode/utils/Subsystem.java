@@ -13,7 +13,7 @@ public interface Subsystem {
      * - sensor processing
      * - state machines
      */
-    void init(HardwareMap hardwareMap);
+    void init();
 
     void update();
 }

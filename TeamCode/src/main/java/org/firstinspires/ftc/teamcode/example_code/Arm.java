@@ -13,11 +13,15 @@ public class Arm implements Subsystem {
 
     private double targetPosition;
 
-    @Override
-    public void init(HardwareMap hardwareMap) {
-        motor = hardwareMap.get(DcMotorEx.class, "arm_motor");
+    public Arm(HardwareMap hardwareMap) {
+        motor = hardwareMap.get(DcMotor.class, "arm");
 
         targetPosition = 0;
+    }
+
+    @Override
+    public void init() {
+
     }
 
     @Override
