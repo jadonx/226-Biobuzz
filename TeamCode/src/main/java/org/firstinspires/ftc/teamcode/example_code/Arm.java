@@ -9,22 +9,22 @@ import org.firstinspires.ftc.teamcode.utils.Subsystem;
 
 @Disabled
 public class Arm implements Subsystem {
-    private DcMotor arm_motor;
+    private DcMotor motor;
 
     private double targetPosition;
 
     @Override
     public void init(HardwareMap hardwareMap) {
-        arm_motor = hardwareMap.get(DcMotorEx.class, "arm_motor");
+        motor = hardwareMap.get(DcMotorEx.class, "arm_motor");
 
         targetPosition = 0;
     }
 
     @Override
     public void update() {
-        double error = targetPosition - arm_motor.getCurrentPosition();
+        double error = targetPosition - motor.getCurrentPosition();
 
-        arm_motor.setPower(error * 0.001);
+        motor.setPower(error * 0.001);
     }
 
     public void setTargetPosition(double position) {
@@ -32,6 +32,6 @@ public class Arm implements Subsystem {
     }
 
     public boolean atTarget() {
-        return (targetPosition - arm_motor.getCurrentPosition()) < 10;
+        return (targetPosition - motor.getCurrentPosition()) < 10;
     }
 }
