@@ -15,7 +15,7 @@ public class ArmTeleop extends OpMode {
     @Override
     public void init() {
         // Create our subsystem
-        arm = new Arm(hardwareMap);
+        arm = new Arm(hardwareMap, gamepad1);
 
         // Create scheduler
         scheduler = new CommandScheduler();
