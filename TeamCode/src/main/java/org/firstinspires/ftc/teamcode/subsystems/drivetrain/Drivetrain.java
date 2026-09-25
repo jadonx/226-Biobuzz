@@ -17,7 +17,7 @@ public class Drivetrain implements Subsystem {
     private IMU imu;
 
     // Gamepad variable (we need a gamepad to use as input)
-    Gamepad gamepad1;
+    private Gamepad gamepad1;
 
     public Drivetrain(HardwareMap hardwareMap, Gamepad gamepad1) {
         frontLeft = hardwareMap.get(DcMotorEx.class, "");

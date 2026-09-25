@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.utils.Constants;
 
-@TeleOp(name="ShooterPrototypeTest")
+@TeleOp(name="ShooterPrototypeTest", group="Test")
 public class ShooterPrototypeTest extends OpMode {
     DcMotorEx shooter1;
     double shooterSpeed;
