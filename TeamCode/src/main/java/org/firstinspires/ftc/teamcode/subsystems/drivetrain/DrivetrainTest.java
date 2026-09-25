@@ -12,7 +12,7 @@ public class DrivetrainTest extends OpMode {
 
     @Override
     public void init() {
-        drivetrain = new Drivetrain(hardwareMap, gamepad1);
+        drivetrain = new Drivetrain(hardwareMap, gamepad1, telemetry);
 
         scheduler = new CommandScheduler();
 
@@ -22,5 +22,7 @@ public class DrivetrainTest extends OpMode {
     @Override
     public void loop() {
         scheduler.run();
+
+        telemetry.update();
     }
 }
