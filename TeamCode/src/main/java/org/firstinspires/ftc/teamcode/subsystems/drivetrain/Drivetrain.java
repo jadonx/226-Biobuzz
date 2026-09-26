@@ -5,6 +5,7 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -53,9 +54,7 @@ public class Drivetrain implements Subsystem {
 
         double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
-        if (gamepad1.xWasPressed()) {
-            imu.resetYaw();
-        }
+        if (gamepad1.xWasPressed()) { imu.resetYaw(); }
 
         driveUpdate(x, y, rx, botHeading);
 
@@ -86,16 +85,16 @@ public class Drivetrain implements Subsystem {
             pinpoint.setPosition(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));
         }
 
-        pinpointTelemetry(pose2D);
+        updateTelemetry(pose2D);
     }
 
-    private void pinpointTelemetry(Pose2D pose2D) {
+    private void updateTelemetry(Pose2D pose2D) {
         telemetry.addLine("Push your robot around to see it track");
         telemetry.addLine("Press A to reset the position");
 
         telemetry.addData("X coordinate (IN)", pose2D.getX(DistanceUnit.INCH));
         telemetry.addData("Y coordinate (IN)", pose2D.getY(DistanceUnit.INCH));
-        telemetry.addData("Heading angle (DEGREES)", pose2D.getHeading(AngleUnit.DEGREES));
+        telemetry.addData("Heading angle (DEGREES)", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
     }
 
     private void configureDriveMotors(HardwareMap hardwareMap) {
@@ -105,6 +104,10 @@ public class Drivetrain implements Subsystem {
         backRight = hardwareMap.get(DcMotorEx.class, Constants.driveMotorBR);
 
         // TODO: Reverse Motors
+        frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -124,7 +127,7 @@ public class Drivetrain implements Subsystem {
     private void configurePinpoint(HardwareMap hardwareMap) {
         pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, Constants.pinpoint);
 
-        pinpoint.setOffsets(-84.0, -168.0, DistanceUnit.MM);
+        pinpoint.setOffsets(54.5, -131.4, DistanceUnit.MM);
         pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
 
         pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
