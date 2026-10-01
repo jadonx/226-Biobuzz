@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.utils;
 
 public class Constants {
+    // Hardware Map
     public static String driveMotorFL = "frontLeft";
     public static String driveMotorFR = "frontRight";
     public static String driveMotorBL = "backLeft";
@@ -12,4 +13,8 @@ public class Constants {
     public static String shooterMotor1 = "shooter1";
 
     public static String intakeMotor = "intake";
+
+    // Values
+    public static Double pinpointXOffset = 54.5;
+    public static Double pinpointYOffset = -131.4;
 }

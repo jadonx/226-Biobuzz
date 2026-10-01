@@ -13,7 +13,5 @@ public interface Subsystem {
      * - sensor processing
      * - state machines
      */
-    void init();
-
     void update();
 }

@@ -7,16 +7,27 @@ import org.firstinspires.ftc.teamcode.utils.CommandScheduler;
 
 @TeleOp(name="DriveTrainTest", group="Test")
 public class DrivetrainTest extends OpMode {
+    // Subsystems
     Drivetrain drivetrain;
+
+    // Commands
+    ManualDriveCommand manualDriveCommand;
+
     CommandScheduler scheduler;
 
     @Override
     public void init() {
-        drivetrain = new Drivetrain(hardwareMap, gamepad1, telemetry);
+        // Subsystems
+        drivetrain = new Drivetrain(hardwareMap);
+
+        // Commands
+        manualDriveCommand = new ManualDriveCommand(drivetrain, gamepad1);
 
         scheduler = new CommandScheduler();
 
         scheduler.registerSubsystem(drivetrain);
+
+        scheduler.schedule(manualDriveCommand);
     }
 
     @Override

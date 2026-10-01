@@ -24,11 +24,6 @@ public class Arm implements Subsystem {
     }
 
     @Override
-    public void init() {
-
-    }
-
-    @Override
     public void update() {
         double error = targetPosition - motor.getCurrentPosition();
 

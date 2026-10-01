@@ -24,11 +24,6 @@ public class Intake implements Subsystem {
     }
 
     @Override
-    public void init() {
-
-    }
-
-    @Override
     public void update() {
         intake.setPower(gamepad1.right_trigger);
     }
