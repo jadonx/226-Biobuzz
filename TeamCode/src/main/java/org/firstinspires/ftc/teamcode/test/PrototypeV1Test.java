@@ -4,30 +4,37 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.drivetrain.Drivetrain;
-import org.firstinspires.ftc.teamcode.subsystems.intake.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.drivetrain.ManualDriveCommand;
 import org.firstinspires.ftc.teamcode.utils.CommandScheduler;
 
 @TeleOp(name="PrototypeV1Test", group="Test")
 public class PrototypeV1Test extends OpMode {
+    // Subsystems
     Drivetrain drivetrain;
-    Intake intake;
 
-    CommandScheduler commandScheduler;
+    // Commands
+    ManualDriveCommand manualDriveCommand;
+
+    CommandScheduler scheduler;
 
     @Override
     public void init() {
-        drivetrain = new Drivetrain(hardwareMap, gamepad1, telemetry);
-        intake = new Intake(hardwareMap, gamepad1);
+        // Subsystems
+        drivetrain = new Drivetrain(hardwareMap);
 
-        commandScheduler = new CommandScheduler();
+        // Commands
+        manualDriveCommand = new ManualDriveCommand(drivetrain, gamepad1);
 
-        commandScheduler.registerSubsystem(drivetrain);
-        commandScheduler.registerSubsystem(intake);
+        scheduler = new CommandScheduler();
+
+        scheduler.registerSubsystem(drivetrain);
+
+        scheduler.schedule(manualDriveCommand);
     }
 
     @Override
     public void loop() {
-        commandScheduler.run();
+        scheduler.run();
 
         telemetry.update();
     }
