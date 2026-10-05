@@ -10,7 +10,7 @@ public class Constants {
     public static String imu = "imu";
     public static String pinpoint = "pinpoint";
 
-    public static String shooterMotor1 = "shooter1";
+    public static String shooterMotor1 = "shooter";
 
     public static String intakeMotor = "intake";
 

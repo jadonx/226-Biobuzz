@@ -30,9 +30,8 @@ public class Drivetrain implements Subsystem {
         configurePinpoint(hardwareMap);
     }
 
-    @Override
-    public void update() {
-        // Only things that will always update every loop belong here
+    public void update(double x, double y, double rx) {
+        driveFieldCentric(x, y, rx);
         pinpoint.update();
     }
 
