@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.utils;
+package org.firstinspires.ftc.teamcode.robot.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,22 +9,7 @@ import java.util.Set;
 public class CommandScheduler {
 
     private final Set<Command> scheduledCommands = new HashSet<>();
-
     private final Map<Subsystem, Command> requirements = new HashMap<>();
-
-    private final Set<Subsystem> subsystems = new HashSet<>();
-
-
-    /*
-     * -------------------------
-     * SUBSYSTEMS
-     * -------------------------
-     */
-
-    public void registerSubsystem(Subsystem subsystem) {
-        subsystems.add(subsystem);
-    }
-
 
     /*
      * -------------------------
@@ -72,13 +57,6 @@ public class CommandScheduler {
      */
 
     public void run() {
-
-        /*
-         * First update all subsystems.
-         */
-        for (Subsystem subsystem : subsystems) {
-            subsystem.update();
-        }
 
         /*
          * Copy the set so commands can safely be
