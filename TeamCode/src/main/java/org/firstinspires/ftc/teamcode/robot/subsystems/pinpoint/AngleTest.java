@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.drivetrain;
+package org.firstinspires.ftc.teamcode.robot.subsystems.pinpoint;
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
