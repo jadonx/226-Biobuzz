@@ -6,9 +6,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.robot.Constants.AllianceColor;
 import org.firstinspires.ftc.teamcode.robot.subsystems.drivetrain.Drivetrain;
+import org.firstinspires.ftc.teamcode.robot.subsystems.intake.Intake;
 
 public class Robot {
     private Drivetrain drivetrain;
+    private Intake intake;
 
     private Gamepad gamepad1;
     private Gamepad gamepad2;
@@ -20,6 +22,7 @@ public class Robot {
 
     public Robot(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, AllianceColor allianceColor) {
         drivetrain = new Drivetrain(hardwareMap);
+        intake = new Intake(hardwareMap);
 
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
@@ -30,6 +33,9 @@ public class Robot {
     public void update() {
         // logic for updating the drive for regular/auto-aim
         updateDrive();
+
+        // intake
+        intake.update(gamepad1.right_trigger);
     }
 
     public void stop() {
