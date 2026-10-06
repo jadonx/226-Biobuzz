@@ -18,23 +18,13 @@ public class Drivetrain implements Subsystem {
     // Motor and IMU variables (frontLeft, frontRight, etc.)
     private DcMotorEx frontLeft, frontRight, backLeft, backRight;
     private IMU imu;
-    private GoBildaPinpointDriver pinpoint;
 
     public Drivetrain(HardwareMap hardwareMap) {
         configureDriveMotors(hardwareMap);
         configureIMU(hardwareMap);
-        configurePinpoint(hardwareMap);
     }
 
-    public void update(double x, double y, double rx) {
-        driveFieldCentric(x, y, rx);
-        pinpoint.update();
-    }
-
-    // =========================
-    // Driving
-    // =========================
-
+    // Drive methods
     public void driveFieldCentric(double x, double y, double rx) {
 
         double botHeading = getHeadingRadians();
@@ -45,7 +35,11 @@ public class Drivetrain implements Subsystem {
         driveRobotCentric(rotX, rotY, rx);
     }
 
-    public void driveRobotCentric(double x, double y, double rx) {
+    public void driveFieldCentricWithAutoAim(double x, double y, double angle) {
+        // TODO: Keep x and y field centric same, change rx for auto-rotate
+    }
+
+    private void driveRobotCentric(double x, double y, double rx) {
 
         double denominator = Math.max(
                 Math.abs(y) + Math.abs(x) + Math.abs(rx),
@@ -77,10 +71,7 @@ public class Drivetrain implements Subsystem {
         backRight.setPower(0);
     }
 
-    // =========================
     // IMU
-    // =========================
-
     public double getHeadingRadians() {
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
     }
@@ -93,22 +84,7 @@ public class Drivetrain implements Subsystem {
         imu.resetYaw();
     }
 
-    // =========================
-    // Pinpoint
-    // =========================
-
-    public Pose2D getPose() {
-        return pinpoint.getPosition();
-    }
-
-    public void resetPose() {
-        pinpoint.setPosition(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));
-    }
-
-    // =========================
     // Configuration Methods
-    // =========================
-
     private void configureDriveMotors(HardwareMap hardwareMap) {
         frontLeft = hardwareMap.get(DcMotorEx.class, Constants.driveMotorFL);
         frontRight = hardwareMap.get(DcMotorEx.class, Constants.driveMotorFR);
@@ -134,17 +110,5 @@ public class Drivetrain implements Subsystem {
                 RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
                 RevHubOrientationOnRobot.UsbFacingDirection.UP));
         imu.initialize(parameters);
-    }
-
-    private void configurePinpoint(HardwareMap hardwareMap) {
-        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, Constants.pinpoint);
-
-        pinpoint.setOffsets(Constants.pinpointXOffset, Constants.pinpointYOffset, DistanceUnit.MM);
-        pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-
-        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
-                GoBildaPinpointDriver.EncoderDirection.FORWARD);
-
-        pinpoint.resetPosAndIMU();
     }
 }
