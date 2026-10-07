@@ -39,7 +39,7 @@ public class Drivetrain implements Subsystem {
         // TODO: Keep x and y field centric same, change rx for auto-rotate
     }
 
-    private void driveRobotCentric(double x, double y, double rx) {
+    public void driveRobotCentric(double x, double y, double rx) {
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
 
         double frontLeftPower = (y + x + rx) / denominator;
@@ -81,10 +81,10 @@ public class Drivetrain implements Subsystem {
         backRight = hardwareMap.get(DcMotorEx.class, Constants.driveMotorBR);
 
         // TODO: Reverse Motors
-        frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

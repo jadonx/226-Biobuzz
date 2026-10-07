@@ -57,6 +57,10 @@ public class Robot {
         else {
             drivetrain.driveFieldCentric(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x);
         }
+
+        if (gamepad1.xWasPressed()) {
+            drivetrain.resetHeading();
+        }
     }
 
     // PINPOINT
