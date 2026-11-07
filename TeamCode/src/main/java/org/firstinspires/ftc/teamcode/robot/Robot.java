@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.robot.Constants.AllianceColor;
 import org.firstinspires.ftc.teamcode.robot.subsystems.drivetrain.Drivetrain;
@@ -14,18 +15,20 @@ public class Robot {
 
     private Gamepad gamepad1;
     private Gamepad gamepad2;
+    private Telemetry telemetry;
 
     // The goal we want to aim at (the one in the same half of the field as we are)
     private Pose2D currentGoalTarget;
 
     private boolean usingAutoAim;
 
-    public Robot(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, AllianceColor allianceColor) {
+    public Robot(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, AllianceColor allianceColor, Telemetry telemetry) {
         drivetrain = new Drivetrain(hardwareMap);
         intake = new Intake(hardwareMap);
 
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
+        this.telemetry = telemetry;
 
         usingAutoAim = false;
     }

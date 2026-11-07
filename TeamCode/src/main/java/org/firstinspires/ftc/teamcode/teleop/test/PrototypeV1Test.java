@@ -15,7 +15,7 @@ public class PrototypeV1Test extends OpMode {
 
     @Override
     public void init() {
-        robot = new Robot(hardwareMap, gamepad1, gamepad2, Constants.AllianceColor.BLUE);
+        robot = new Robot(hardwareMap, gamepad1, gamepad2, Constants.AllianceColor.BLUE, telemetry);
     }
 
     @Override

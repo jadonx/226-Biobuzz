@@ -10,15 +10,21 @@ import org.firstinspires.ftc.teamcode.robot.utils.Subsystem;
 
 public class Intake implements Subsystem {
     DcMotorEx intake;
+    DcMotorEx transfer;
 
     public Intake(HardwareMap hardwareMap) {
         intake = hardwareMap.get(DcMotorEx.class, Constants.intakeMotor);
+        transfer = hardwareMap.get(DcMotorEx.class, Constants.transferMotor);
 
         intake.setDirection(DcMotorSimple.Direction.REVERSE);
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        // transfer.setDirection(DcMotorSimple.Direction.REVERSE);
+        transfer.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void update(double power) {
         intake.setPower(power);
+        transfer.setPower(power);
     }
 }
