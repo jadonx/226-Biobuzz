@@ -15,11 +15,9 @@ public class Pinpoint implements Subsystem {
     public Pinpoint(HardwareMap hardwareMap) {
         pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, Constants.pinpoint);
 
-        // TODO: Make sure these are correct!
         pinpoint.setOffsets(Constants.pinpointXOffset, Constants.pinpointYOffset, DistanceUnit.MM);
-        pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
 
-        // TODO: This one too!
+        pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
                 GoBildaPinpointDriver.EncoderDirection.FORWARD);
 
@@ -27,11 +25,10 @@ public class Pinpoint implements Subsystem {
     }
 
     public void update() {
-        // TODO: Update pinpoint
+        pinpoint.update();
     }
 
-    public Pose2D getPose() {
-        // TODO: Return correct pose
-        return new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+    public Pose2D getPosition() {
+        return pinpoint.getPosition();
     }
 }

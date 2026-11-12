@@ -73,6 +73,22 @@ public class Drivetrain implements Subsystem {
         imu.resetYaw();
     }
 
+    public double getFrontLeftPower() {
+        return frontLeft.getPower();
+    }
+
+    public double getFrontRight() {
+        return frontRight.getPower();
+    }
+
+    public double getBackLeft() {
+        return backLeft.getPower();
+    }
+
+    public double getBackRight() {
+        return backRight.getPower();
+    }
+
     // Configuration Methods
     private void configureDriveMotors(HardwareMap hardwareMap) {
         frontLeft = hardwareMap.get(DcMotorEx.class, Constants.driveMotorFL);
@@ -82,7 +98,7 @@ public class Drivetrain implements Subsystem {
 
         // TODO: Reverse Motors
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
