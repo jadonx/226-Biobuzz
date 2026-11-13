@@ -25,6 +25,5 @@ public class Intake implements Subsystem {
 
     public void update(double power) {
         intake.setPower(power);
-        transfer.setPower(power);
     }
 }

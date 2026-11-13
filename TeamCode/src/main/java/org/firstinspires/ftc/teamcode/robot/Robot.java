@@ -18,6 +18,8 @@ public class Robot {
 
     private Gamepad gamepad1;
 
+    private boolean rampUp = false;
+    private boolean intaking = false;
     public Robot(HardwareMap hardwareMap, Gamepad gamepad1) {
         drivetrain = new Drivetrain(hardwareMap);
         intake = new Intake(hardwareMap);
@@ -43,21 +45,46 @@ public class Robot {
     }
 
     private void updateIntake() {
-        intake.update(Math.max(gamepad1.right_trigger, gamepad1.left_trigger));
+        if(gamepad1.y){
+            intaking = !intaking;
+        } else if(gamepad1.left_trigger > 0.05){
+            intake.update(-gamepad1.left_trigger);
+        }
+        else if (intaking){
+            intake.update(1);
+        } else{
+            intake.update(0);
+        }
+
     }
 
     private void updateShooter() {
         if(gamepad1.a){
-            shooter.setTargetRPM(4500);
+            rampUp = true;
+
         }
+        if(rampUp){
+            if(shooter.getTargetRPM() <4000){
+                shooter.setTargetRPM(shooter.getTargetRPM()+200);
+            } else{
+                shooter.setTargetRPM(4500);
+            }
+        }
+
         if(gamepad1.b){
             shooter.setTargetRPM(0);
+            rampUp = false;
         }
         shooter.update();
     }
 
     private void updateTransfer() {
-        transfer.update(gamepad1.left_trigger);
+        if(gamepad1.left_trigger > 0.05){
+            transfer.update(-gamepad1.left_trigger);
+        } else{
+            transfer.update(gamepad1.right_trigger);
+        }
+
     }
 
     public double getFrontLeft() {
