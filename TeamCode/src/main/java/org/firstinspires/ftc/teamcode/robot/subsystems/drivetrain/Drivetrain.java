@@ -53,6 +53,13 @@ public class Drivetrain implements Subsystem {
         backRight.setPower(backRightPower);
     }
 
+    public void setPower(double power) {
+        frontLeft.setPower(power);
+        frontRight.setPower(power);
+        backLeft.setPower(power);
+        backRight.setPower(power);
+    }
+
     public void stop() {
         frontLeft.setPower(0);
         frontRight.setPower(0);

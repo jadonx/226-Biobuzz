@@ -23,7 +23,7 @@ public class Constants {
     // Values
     public static Double ticksPerRev = 28.0;
 
-    public static Double pinpointXOffset = 54.5; // backwards 11.5
+    public static Double pinpointXOffset = -54.5; // backwards 11.5
     public static Double pinpointYOffset = -131.4;
 
     public static Pose2D redGoal1 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
