@@ -45,7 +45,7 @@ public class Robot {
     }
 
     private void updateIntake() {
-        if(gamepad1.y){
+        if(gamepad1.yWasPressed()) {
             intaking = !intaking;
         } else if(gamepad1.left_trigger > 0.05){
             intake.update(-gamepad1.left_trigger);
@@ -64,10 +64,10 @@ public class Robot {
 
         }
         if(rampUp){
-            if(shooter.getTargetRPM() <4000){
-                shooter.setTargetRPM(shooter.getTargetRPM()+200);
+            if(shooter.getTargetRPM() < 4000){
+                shooter.setTargetRPM(shooter.getTargetRPM() + 200);
             } else{
-                shooter.setTargetRPM(4500);
+                shooter.setTargetRPM(6000);
             }
         }
 
