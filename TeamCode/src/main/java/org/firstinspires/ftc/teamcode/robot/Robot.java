@@ -47,6 +47,7 @@ public class Robot {
 
         if (usingAutoAim) {
             // TODO: Create update method for drive with auto-aim
+            drivetrain.driveFieldCentricWithAutoAim(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x);
         }
         else {
             drivetrain.driveFieldCentric(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x);
@@ -58,8 +59,9 @@ public class Robot {
         // TODO: Logic for updating target goal when we are in either sides of the field
     }
 
-    private void calculateAutoAimRotadtion(double currentRotation) {
+    private void calculateAutoAimRotation(double currentRotation) {
         // TODO: Given our current rotation + the pinpoint's x/y position, find the angle towards the goal
+
     }
 
     private void calculateGoalDistance() {

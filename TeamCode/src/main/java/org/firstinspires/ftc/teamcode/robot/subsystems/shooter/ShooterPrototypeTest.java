@@ -24,6 +24,9 @@ public class ShooterPrototypeTest extends OpMode {
 
     @Override
     public void loop() {
+        //add code to call driveFieldCentricWithAutoAim() method
+
+
         if (gamepad1.yWasPressed()) {
             shooterSpeed += 10;
         }
