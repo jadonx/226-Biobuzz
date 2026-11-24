@@ -155,6 +155,4 @@ public class Robot {
     public double getHeadingRadians() {
         return drivetrain.getHeadingRadians();
     }
-
-    public double getCurrentShooter
 }
