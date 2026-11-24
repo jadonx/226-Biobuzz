@@ -14,8 +14,8 @@ import org.firstinspires.ftc.teamcode.robot.utils.Subsystem;
 public class Shooter implements Subsystem {
     private DcMotorEx shooter;
 
-    public static double kS = 0.12;
-    public static double kV = 0.000395;
+    public static double kS = 0.15;
+    public static double kV = 0.000415;
     public static double kP = 0;
 
     private double targetVelocity;

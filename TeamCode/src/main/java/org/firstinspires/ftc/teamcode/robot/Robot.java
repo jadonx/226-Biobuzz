@@ -39,6 +39,7 @@ public class Robot {
         turret = new Turret(hardwareMap);
         shooter = new Shooter(hardwareMap);
         flowerIntake = new FlowerIntake(hardwareMap);
+        pinpoint = new Pinpoint(hardwareMap);
 
         expansionHub = hardwareMap.get(LynxModule.class, Constants.expansionHub);
 
@@ -52,6 +53,7 @@ public class Robot {
         updateTurret();
         updateShooter();
         updateFlowerIntake();
+        updatePinpoint();
     }
 
     private void updateDrive() {
@@ -83,11 +85,8 @@ public class Robot {
     }
 
     private void updateTurret() {
-        if (gamepad1.dpad_left) {
-            turret.setTargetAngle(turret.getTargetAngle() - 1.0);
-        } else if (gamepad1.dpad_right) {
-            turret.setTargetAngle(turret.getTargetAngle() + 1.0);
-        }
+        double angleError = pinpoint.getAngleError(pinpoint.getClosestBlueGoal());
+        turret.setTargetAngle(angleError);
         turret.update();
     }
 
@@ -95,10 +94,10 @@ public class Robot {
         if (gamepad1.yWasPressed()) {
             runShooter = !runShooter;
         } else if (runShooter) {
-            if (shooter.getTargetRPM() < 2500) {
+            if (shooter.getTargetRPM() < 3600) {
                 shooter.setTargetRPM(shooter.getTargetRPM() + 200);
             } else {
-                shooter.setTargetRPM(3200);
+                shooter.setTargetRPM(3700);
             }
         } else {
             shooter.setTargetRPM(0);
@@ -129,6 +128,10 @@ public class Robot {
         }
     }
 
+    private void updatePinpoint() {
+        pinpoint.update();
+    }
+
     public double getFrontLeft() {
         return drivetrain.getFrontLeftPower();
     }
@@ -152,4 +155,6 @@ public class Robot {
     public double getHeadingRadians() {
         return drivetrain.getHeadingRadians();
     }
+
+    public double getCurrentShooter
 }

@@ -30,10 +30,14 @@ public class Constants {
     public static Double pinpointXOffset = 54.5;
     public static Double pinpointYOffset = -130.0;
 
-    public static Pose2D redGoal1 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
-    public static Pose2D redGoal2 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
-    public static Pose2D blueGoal1 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
-    public static Pose2D blueGOal2 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+    public static Pose2D redGoal1 = new Pose2D(DistanceUnit.INCH, 15, -15, AngleUnit.DEGREES, 0);
+    public static Pose2D redGoal2 = new Pose2D(DistanceUnit.INCH, -15, -15, AngleUnit.DEGREES, 0);
+    public static Pose2D blueGoal1 = new Pose2D(DistanceUnit.INCH, 17, 15, AngleUnit.DEGREES, 0);
+    public static Pose2D blueGoal2 = new Pose2D(DistanceUnit.INCH, -1, 15, AngleUnit.DEGREES, 0);
+//    public static Pose2D redGoal1 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+//    public static Pose2D redGoal2 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+//    public static Pose2D blueGoal1 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+//    public static Pose2D blueGoal2 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
 
     public static enum AllianceColor {
         RED, BLUE
