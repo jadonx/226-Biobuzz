@@ -1,30 +1,46 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.robot.subsystems.drivetrain.Drivetrain;
+import org.firstinspires.ftc.teamcode.robot.subsystems.flowerintake.FlowerIntake;
 import org.firstinspires.ftc.teamcode.robot.subsystems.intake.Intake;
+import org.firstinspires.ftc.teamcode.robot.subsystems.pinpoint.Pinpoint;
 import org.firstinspires.ftc.teamcode.robot.subsystems.shooter.Shooter;
 import org.firstinspires.ftc.teamcode.robot.subsystems.transfer.Transfer;
+import org.firstinspires.ftc.teamcode.robot.subsystems.turret.Turret;
 
 public class Robot {
     private Drivetrain drivetrain;
     private Intake intake;
     private Transfer transfer;
-
+    private Turret turret;
     private Shooter shooter;
+    private FlowerIntake flowerIntake;
+    private Pinpoint pinpoint;
+
+    private LynxModule expansionHub;
 
     private Gamepad gamepad1;
 
-    private boolean rampUp = false;
-    private boolean intaking = false;
+    private boolean runIntake = false;
+    private boolean runShooter = false;
+
+    private boolean flowerIntakeIsUp = true;
+    private boolean flowerIntakeMoving = false;
+
     public Robot(HardwareMap hardwareMap, Gamepad gamepad1) {
         drivetrain = new Drivetrain(hardwareMap);
         intake = new Intake(hardwareMap);
         transfer = new Transfer(hardwareMap);
+        turret = new Turret(hardwareMap);
         shooter = new Shooter(hardwareMap);
+        flowerIntake = new FlowerIntake(hardwareMap);
+
+        expansionHub = hardwareMap.get(LynxModule.class, Constants.expansionHub);
 
         this.gamepad1 = gamepad1;
     }
@@ -33,7 +49,9 @@ public class Robot {
         updateDrive();
         updateIntake();
         updateTransfer();
+        updateTurret();
         updateShooter();
+        updateFlowerIntake();
     }
 
     private void updateDrive() {
@@ -45,46 +63,70 @@ public class Robot {
     }
 
     private void updateIntake() {
-        if(gamepad1.yWasPressed()) {
-            intaking = !intaking;
-        } else if(gamepad1.left_trigger > 0.05){
+        if (gamepad1.bWasPressed()) {
+            runIntake = !runIntake;
+        } else if (gamepad1.left_trigger > 0.05) {
             intake.update(-gamepad1.left_trigger);
+        } else if (runIntake) {
+            intake.update(1.0);
+        } else {
+            intake.update(0.0);
         }
-        else if (intaking){
-            intake.update(1);
-        } else{
-            intake.update(0);
-        }
+    }
 
+    private void updateTransfer() {
+        if (gamepad1.left_trigger > 0.05) {
+            transfer.update(-gamepad1.left_trigger);
+        } else {
+            transfer.update(gamepad1.right_trigger);
+        }
+    }
+
+    private void updateTurret() {
+        if (gamepad1.dpad_left) {
+            turret.setTargetAngle(turret.getTargetAngle() - 1.0);
+        } else if (gamepad1.dpad_right) {
+            turret.setTargetAngle(turret.getTargetAngle() + 1.0);
+        }
+        turret.update();
     }
 
     private void updateShooter() {
-        if(gamepad1.a){
-            rampUp = true;
-
-        }
-        if(rampUp){
-            if(shooter.getTargetRPM() < 4000){
+        if (gamepad1.yWasPressed()) {
+            runShooter = !runShooter;
+        } else if (runShooter) {
+            if (shooter.getTargetRPM() < 2500) {
                 shooter.setTargetRPM(shooter.getTargetRPM() + 200);
-            } else{
-                shooter.setTargetRPM(6000);
+            } else {
+                shooter.setTargetRPM(3200);
             }
-        }
-
-        if(gamepad1.b){
+        } else {
             shooter.setTargetRPM(0);
-            rampUp = false;
         }
         shooter.update();
     }
 
-    private void updateTransfer() {
-        if(gamepad1.left_trigger > 0.05){
-            transfer.update(-gamepad1.left_trigger);
-        } else{
-            transfer.update(gamepad1.right_trigger);
+    private void updateFlowerIntake() {
+        double current = expansionHub.getCurrent(CurrentUnit.AMPS)
+                - drivetrain.getCurrent()
+                - intake.getCurrent()
+                - transfer.getCurrent()
+                - shooter.getCurrent();
+
+        if (gamepad1.aWasPressed() && !flowerIntakeMoving) {
+            flowerIntakeMoving = true;
         }
 
+        if (flowerIntakeMoving) {
+            double power = flowerIntakeIsUp ? -1.0 : 1.0;
+
+            boolean stalled = flowerIntake.update(power, current);
+
+            if (stalled) {
+                flowerIntakeMoving = false;
+                flowerIntakeIsUp = !flowerIntakeIsUp;
+            }
+        }
     }
 
     public double getFrontLeft() {

@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.robot.Constants;
 import org.firstinspires.ftc.teamcode.robot.utils.Subsystem;
 
@@ -20,5 +21,9 @@ public class Intake implements Subsystem {
 
     public void update(double power) {
         intake.setPower(power);
+    }
+
+    public double getCurrent() {
+        return intake.getCurrent(CurrentUnit.AMPS);
     }
 }

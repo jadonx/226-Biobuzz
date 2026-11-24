@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.robot.Constants;
 import org.firstinspires.ftc.teamcode.robot.utils.Subsystem;
 
@@ -13,8 +14,8 @@ import org.firstinspires.ftc.teamcode.robot.utils.Subsystem;
 public class Shooter implements Subsystem {
     private DcMotorEx shooter;
 
-    public static double kS = 0;
-    public static double kV = 0.00042;
+    public static double kS = 0.12;
+    public static double kV = 0.000395;
     public static double kP = 0;
 
     private double targetVelocity;
@@ -23,7 +24,7 @@ public class Shooter implements Subsystem {
         shooter = hardwareMap.get(DcMotorEx.class, Constants.shooterMotor);
 
         shooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        shooter.setDirection(DcMotorSimple.Direction.FORWARD);
+        shooter.setDirection(DcMotorSimple.Direction.REVERSE);
         shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
@@ -57,6 +58,53 @@ public class Shooter implements Subsystem {
 //        return Math.max(min, Math.min(value, max));
 //    }
 
+
+    public void updateBB() {
+        if (targetVelocity <= 0) {
+            shooter.setPower(0);
+            return;
+        }
+
+        double currentVelocity = shooter.getVelocity();
+
+        double ff = kS + kV * targetVelocity;
+
+        if (currentVelocity < targetVelocity) {
+            shooter.setPower(1.0);
+        } else {
+            shooter.setPower(Math.max(0, Math.min(ff, 1.0)));
+        }
+    }
+
+
+
+//    public static double tolerance = 20;
+//
+//    private boolean accelerating = true;
+//
+//    public void updateBB() {
+//        if (targetVelocity <= 0) {
+//            shooter.setPower(0);
+//            accelerating = true;
+//            return;
+//        }
+//
+//        double currentVelocity = shooter.getVelocity();
+//        double ff = kS + kV * targetVelocity;
+//
+//        if (currentVelocity < targetVelocity - tolerance) {
+//            accelerating = true;
+//        } else if (currentVelocity > targetVelocity + tolerance) {
+//            accelerating = false;
+//        }
+//
+//        double power = accelerating ? 1.0 : ff;
+//
+//        shooter.setPower(Math.max(0, Math.min(power, 1.0)));
+//    }
+
+
+
     public double getCurrentRPM() {
         return shooter.getVelocity() / Constants.ticksPerRev * 60;
     }
@@ -67,5 +115,9 @@ public class Shooter implements Subsystem {
 
     public double getTargetRPM() {
         return targetVelocity / Constants.ticksPerRev * 60;
+    }
+
+    public double getCurrent() {
+        return shooter.getCurrent(CurrentUnit.AMPS);
     }
 }

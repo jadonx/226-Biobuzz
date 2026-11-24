@@ -20,6 +20,10 @@ public class Constants {
     public static String transferMotor = "transfer"; // 2 expansion
     public static String turretMotor = "turret"; // 1 expansion
 
+    public static String flowerIntakeMotor = "flowerIntake";
+
+    public static String expansionHub = "Expansion Hub 2";
+
     // Values
     public static Double ticksPerRev = 28.0;
 
